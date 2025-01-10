@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lambda Functions ใน Python</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // ฟังก์ชันสำหรับการสลับแสดง/ซ่อนเมนู
+        function toggleMenu() {
+            var menu = document.getElementById("navbar");
+            var overlay = document.getElementById("overlay");
+            // ใช้การเพิ่มและลบคลาสเพื่อแสดง/ซ่อนแถบเมนู
+            menu.classList.toggle("active");
+            overlay.classList.toggle("active");
+        }
+
+        // ฟังก์ชันสำหรับการเปิดและปิดเนื้อหาของหัวข้อ
+        function toggleContent(id) {
+            var content = document.getElementById(id);
+            var button = document.getElementById('btn-' + id);
+            
+            // ซ่อนเนื้อหาทั้งหมดก่อน
+            var contents = document.getElementsByClassName('content');
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].style.display = 'none';
+            }
+
+            // แสดงเนื้อหาของหัวข้อที่เลือก
+            if (content.style.display === "none") {
+                content.style.display = "block";
+                button.innerHTML = "ยุบข้อมูล &#9660;";
+            } else {
+                content.style.display = "none";
+                button.innerHTML = "แสดงข้อมูล &#9654;";
+            }
+        }
+
+        // ฟังก์ชันสำหรับการปิดเมนูเมื่อคลิกที่ Overlay
+        function closeMenu() {
+            var menu = document.getElementById("navbar");
+            var overlay = document.getElementById("overlay");
+            menu.classList.remove("active");
+            overlay.classList.remove("active");
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- เมนูทับ (Overlay) สำหรับปิดเมนูเมื่อคลิกที่บริเวณมืดๆ -->
+    <div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+    <header>
+        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+        <h1>Lambda Functions ใน Python</h1>
+    </header>
+
+    <!-- เมนู -->
+    <div id="navbar" class="navbar">
+        <ul>
+            <li><a href="#" onclick="toggleContent('content-1')">1. รูปแบบของ Lambda Function</a></li>
+            <li><a href="#" onclick="toggleContent('content-2')">2. การใช้งาน Lambda Function</a></li>
+            <li><a href="#" onclick="toggleContent('content-3')">3. ข้อดีและข้อเสียของ Lambda Function</a></li>
+            <li><a href="#" onclick="toggleContent('content-4')">4. ตัวอย่างการใช้งานเพิ่มเติม</a></li>
+            <li><a href="#" onclick="toggleContent('content-5')">5. รูปภาพประกอบ</a></li>
+            <li><a href="#" onclick="toggleContent('content-6')">6. แบบฝึกหัด</a></li>
+            <li><a href="#" onclick="toggleContent('content-7')">7. ลิงค์เพิ่มเติม</a></li>
+            <li><a href="#" onclick="toggleContent('content-8')">8. สรุป</a></li>
+        </ul>
+    </div>
+
+    <!-- เนื้อหา -->
+    <div class="container">
+        <div id="content-1" class="content" style="display:none;">
+            <h2>1. รูปแบบของ Lambda Function</h2>
+            <p>Lambda function หรือที่เรียกว่า anonymous function (ฟังก์ชันไร้ชื่อ) คือฟังก์ชันที่ถูกสร้างขึ้นโดยใช้คำสั่ง <code>lambda</code> ใน Python โดยที่ฟังก์ชันนี้จะไม่มีชื่อ และมักจะใช้ในกรณีที่ฟังก์ชันนั้น ๆ ไม่ได้มีความซับซ้อนหรือใช้แค่ครั้งเดียว</p>
+            <pre><code>lambda arguments: expression</code></pre>
+            <p>ตัวอย่างเช่น:</p>
+            <div class="example">
+                <pre><code>add = lambda x, y: x + y
+print(add(2, 3))  # ผลลัพธ์คือ 5</code></pre>
+            </div>
+        </div>
+
+        <div id="content-2" class="content" style="display:none;">
+            <h2>2. การใช้งาน Lambda Function</h2>
+            <p>Lambda function มักจะใช้ในสถานการณ์ที่ต้องการฟังก์ชันง่าย ๆ สำหรับการประมวลผลบางอย่าง โดยเฉพาะเมื่อใช้ร่วมกับฟังก์ชันใน Python เช่น <code>map()</code>, <code>filter()</code>, <code>sorted()</code> ฯลฯ</p>
+            <p>ตัวอย่างการใช้ Lambda กับ <code>map()</code>:</p>
+            <pre><code>numbers = [1, 2, 3, 4]
+squared = list(map(lambda x: x**2, numbers))
+print(squared)  # ผลลัพธ์: [1, 4, 9, 16]</code></pre>
+        </div>
+
+        <div id="content-3" class="content" style="display:none;">
+            <h2>3. ข้อดีและข้อเสียของ Lambda Function</h2>
+            <p><strong>ข้อดี:</strong> Lambda function ช่วยให้โค้ดของคุณกระชับและสั้นลง เหมาะสำหรับใช้ในกรณีที่ต้องการฟังก์ชันชั่วคราวและไม่ซับซ้อน</p>
+            <p><strong>ข้อเสีย:</strong> การใช้ Lambda อาจทำให้โค้ดอ่านยากขึ้น โดยเฉพาะเมื่อมีความซับซ้อนมากขึ้นหรือใช้ในหลาย ๆ จุด</p>
+        </div>
+
+        <div id="content-4" class="content" style="display:none;">
+            <h2>4. ตัวอย่างการใช้งานเพิ่มเติม</h2>
+            <p>ตัวอย่างการใช้ Lambda กับฟังก์ชันต่าง ๆ ใน Python:</p>
+            <ul>
+                <li><code>filter()</code>: ใช้เพื่อกรองข้อมูลจากลิสต์</li>
+                <pre><code>numbers = [1, 2, 3, 4, 5, 6]
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+print(even_numbers)  # ผลลัพธ์: [2, 4, 6]</code></pre>
+                <li><code>sorted()</code>: ใช้ในการจัดเรียงข้อมูล</li>
+                <pre><code>numbers = [5, 2, 9, 1, 5, 6]
+sorted_numbers = sorted(numbers, key=lambda x: x)
+print(sorted_numbers)  # ผลลัพธ์: [1, 2, 5, 5, 6, 9]</code></pre>
+            </ul>
+        </div>
+
+        <div id="content-5" class="content" style="display:none;">
+            <h2>5. รูปภาพประกอบ</h2>
+            <img src="https://i.ytimg.com/vi/WxuK21I6T_k/sddefault.jpg" alt="ตัวอย่าง Lambda Function" style="width:100%; max-width:600px;">
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=WxuK21I6T_k" target="_blank">Lambda Function คืออะไร? ฟังก์ชันเล็กๆ ในบรรทัดเดียว</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="content-6" class="content" style="display:none;">
+            <h2>6. แบบฝึกหัด</h2>
+            <ul>
+                <li>
+                    <p>ฝึกหัดที่ 1: ฟังก์ชัน Lambda ที่คูณสองของตัวเลขจะเขียนอย่างไร?</p>
+                    <form id="q1">
+                        <input type="radio" id="q1-a1" name="q1" value="a1">
+                        <label for="q1-a1">lambda x: x * 2</label><br>
+                        <input type="radio" id="q1-a2" name="q1" value="a2">
+                        <label for="q1-a2">lambda x, y: x * y</label><br>
+                        <input type="radio" id="q1-a3" name="q1" value="a3">
+                        <label for="q1-a3">lambda x: x + 2</label><br>
+                    </form>
+                </li>
+                <li>
+                    <p>ฝึกหัดที่ 2: ฟังก์ชัน <code>map()</code> คูณสองของตัวเลขในลิสต์จะเขียนอย่างไร?</p>
+                    <form id="q2">
+                        <input type="radio" id="q2-a1" name="q2" value="a1">
+                        <label for="q2-a1">map(lambda x: x * 2, numbers)</label><br>
+                        <input type="radio" id="q2-a2" name="q2" value="a2">
+                        <label for="q2-a2">map(lambda x: x + 2, numbers)</label><br>
+                        <input type="radio" id="q2-a3" name="q2" value="a3">
+                        <label for="q2-a3">map(lambda x: x ** 2, numbers)</label><br>
+                    </form>
+                </li>
+                <li>
+                    <p>ฝึกหัดที่ 3: ฟังก์ชัน <code>filter()</code> กรองเลขคู่จากลิสต์จะเขียนอย่างไร?</p>
+                    <form id="q3">
+                        <input type="radio" id="q3-a1" name="q3" value="a1">
+                        <label for="q3-a1">filter(lambda x: x % 2 == 0, numbers)</label><br>
+                        <input type="radio" id="q3-a2" name="q3" value="a2">
+                        <label for="q3-a2">filter(lambda x: x % 2 != 0, numbers)</label><br>
+                        <input type="radio" id="q3-a3" name="q3" value="a3">
+                        <label for="q3-a3">filter(lambda x: x < 0, numbers)</label><br>
+                    </form>
+                </li>
+            </ul>
+        
+            <button onclick="submitAnswers()">ส่งคำตอบ</button>
+        
+            <div id="score" style="display:none;">
+                <h3>คะแนนของคุณ:</h3>
+                <p id="result"></p>
+            </div>
+        </div>
+        
+        <script>
+            function submitAnswers() {
+                var score = 0;
+        
+                // ตรวจสอบคำตอบ
+                var correctAnswers = {
+                    q1: 'a1', // คำตอบที่ถูกต้องสำหรับคำถามที่ 1
+                    q2: 'a1', // คำตอบที่ถูกต้องสำหรับคำถามที่ 2
+                    q3: 'a1'  // คำตอบที่ถูกต้องสำหรับคำถามที่ 3
+                };
+        
+                // ตรวจสอบคำตอบของแต่ละคำถาม
+                for (var question in correctAnswers) {
+                    var selectedAnswer = document.querySelector('input[name="' + question + '"]:checked');
+                    if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                        score++;
+                    }
+                }
+        
+                // แสดงคะแนน
+                document.getElementById("score").style.display = "block";
+                document.getElementById("result").innerHTML = "คุณได้คะแนน " + score + " จาก 3";
+        
+                // ปิดการเลือกคำตอบหลังจากส่ง
+                disableAnswerForms();
+            }
+        
+            function disableAnswerForms() {
+                var forms = document.querySelectorAll("form");
+                forms.forEach(function(form) {
+                    var inputs = form.querySelectorAll("input");
+                    inputs.forEach(function(input) {
+                        input.disabled = true;
+                    });
+                });
+            }
+        </script>
+        
+
+        <div id="content-7" class="content" style="display:none;">
+            <h2>7. ลิงค์เพิ่มเติม</h2>
+            <ul>
+                <li><a href="https://www.w3schools.com/python/python_lambda.asp" target="_blank">การใช้ฟังก์ชัน Lambda ใน Python</a></li>
+                <li><a href="https://www.w3schools.com/python/ref_func_map.asp" target="_blank">การใช้ฟังก์ชัน <code>map()</code> ใน Python</a></li>
+                <li><a href="https://www.w3schools.com/python/ref_func_filter.asp" target="_blank">การใช้ฟังก์ชัน <code>filter()</code> ใน Python</a></li>
+                <li><a href="https://www.w3schools.com/python/ref_func_sorted.asp" target="_blank">การใช้ฟังก์ชัน <code>sorted()</code> ใน Python</a></li>
+            </ul>
+        </div>
+
+        <div id="content-8" class="content" style="display:none;">
+            <h2>8. สรุป</h2>
+            <p>ในบทนี้เราได้เรียนรู้เกี่ยวกับ Lambda Functions ใน Python ซึ่งเป็นฟังก์ชันที่มีลักษณะพิเศษและมีประโยชน์ในการเขียนโค้ดที่กระชับและสะดวก โดยสามารถนำไปใช้ในกรณีต่าง ๆ เช่น การจัดการข้อมูลในลิสต์หรือฟังก์ชันที่มีลักษณะเฉพาะ</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
